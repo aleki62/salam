@@ -171,7 +171,7 @@ public class MyBCReceiver extends BroadcastReceiver {
                 NetworkInfo info = intent.getParcelableExtra(WifiManager.EXTRA_NETWORK_INFO);
                 MainActivity.wificonnect= info.isConnected();
 //                Log.e("alhabib", MainActivity.infoMe.CurrentSSID + " وصل شد");
-
+//
                 if (info != null && info.isConnected()) {
                     // Do your work.
                     // e.g. To ch eck the Network Name or other info:
