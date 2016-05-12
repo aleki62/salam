@@ -172,6 +172,8 @@ public class MyBCReceiver extends BroadcastReceiver {
                 MainActivity.wificonnect= info.isConnected();
 //                Log.e("alhabib", MainActivity.infoMe.CurrentSSID + " وصل شد");
 //
+//                salam khobi????
+                System.out.print("salam");
                 if (info != null && info.isConnected()) {
                     // Do your work.
                     // e.g. To ch eck the Network Name or other info:
