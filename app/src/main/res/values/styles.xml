@@ -1,0 +1,81 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="PhotoGrid">
+        <item name="android:drawSelectorOnTop">true</item>
+        <item name="android:listSelector">@drawable/photogrid_selector</item>
+    </style>
+
+    <style name="button_text">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#EF7F1A</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textSize">30dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">#ffffff</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_up_dialog</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_down</item>
+    </style>
+
+    <!-- Animation for dialog box -->
+    <style name="DialogSlideAnim" parent="@android:style/Theme.Dialog">
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+    </style>
+
+    <style name="btn_rm_tv_black_common_style">
+
+    <item name="android:textSize">12.0sp</item>
+
+    <item name="android:textColor">@color/rm_tv_black_textcolor_inactive</item>
+
+    <item name="android:gravity">center</item>
+
+    <item name="android:layout_width">60.0dip</item>
+
+    <item name="android:layout_height">60.0dip</item>
+
+    <item name="android:layout_centerVertical">true</item>
+
+</style>
+
+    <style name="btn_rm_tv_black_9_style">
+
+    <item name="android:textSize">24.0sp</item>
+
+    <item name="android:textColor">@color/rm_tv_black_textcolor_inactive</item>
+
+    <item name="android:gravity">center</item>
+
+    <item name="android:background">@drawable/btn_tv_common_black_selector</item>
+
+    <item name="android:layout_width">60.0dip</item>
+
+    <item name="android:layout_height">60.0dip</item>
+
+    </style>
+
+</resources>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.parmissmarthome.parmis_smart_home">
+
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" /> -->
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!-- <uses-permission android:name="com.parmissmarthome.parmis_smart_home.permission.C2D_MESSAGE" /> -->
+    <!--  -->
+    <!-- <permission android:name="com.parmissmarthome.parmis_smart_home.permission.C2D_MESSAGE" /> -->
+    <!--  -->
+    <!-- <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" /> -->
+    <!-- <uses-permission android:name="android.permission.WAKE_LOCK" /> -->
+    <!-- <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" /> -->
+    <!-- <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" /> -->
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- <receiver -->
+        <!-- android:name=".MyBCReceiver" -->
+        <!-- android:enabled="true" -->
+        <!-- android:exported="true"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.SCREEN_ON" /> -->
+        <!-- <action android:name="android.net.wifi.WIFI_STATE_CHANGED" /> -->
+        <!-- </intent-filter> -->
+        <!-- </receiver> -->
+
+        <service
+            android:name=".runScript"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".ListeningServices"
+            android:enabled="true"
+            android:exported="true" />
+
+        <activity
+            android:name=".addscript"
+            android:label="@string/title_activity_addscript"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".sel_action_script"
+            android:label="@string/title_activity_sel_action_script"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".addaction"
+            android:label="@string/title_activity_addaction"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".mobilejoin"
+            android:label="@string/title_activity_mobilejoin"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".TVRemote" />
+        <activity android:name=".DeviceActivity"></activity>
+    </application>
+
+</manifest>

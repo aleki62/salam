@@ -1,0 +1,88 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/album_item"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@drawable/shape_main_item">
+
+    <ImageView
+        android:id="@+id/mainitemimg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+         />
+        <!--android:scaleType="fitXY"-->
+        <!--android:background="@drawable/shape_main_item"-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/mainitemimg"
+        android:background="@drawable/shape_main_item_btn"
+        android:padding="6dp"
+        android:id="@+id/llphotoitemBotton">
+        <!--android:background="#70000000"-->
+
+        <TextView
+            android:id="@+id/mainitemtxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:text="تست"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:weightSum="1"
+        android:layout_alignParentTop="true"
+        android:clickable="true"
+        android:id="@+id/mmbtnlOn"
+        android:gravity="center|bottom"
+        android:layout_above="@+id/llphotoitemBotton">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imglighton"
+
+            android:layout_weight="0.40"
+            android:src="@mipmap/lighton"
+            android:layout_gravity="bottom"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:weightSum="1"
+        android:clickable="true"
+        android:id="@+id/mmbtnlOff"
+        android:gravity="center|bottom"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/llphotoitemBotton"
+        android:layout_toRightOf="@+id/mmbtnlOn"
+        android:layout_toEndOf="@+id/mmbtnlOn"
+        android:background="#10000000">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imglightoff"
+            android:layout_weight="0.40"
+            android:src="@mipmap/lightoff"
+            android:layout_gravity="bottom" />
+    </LinearLayout>
+
+</RelativeLayout>

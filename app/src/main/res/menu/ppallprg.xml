@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/ppaddtomain" android:title="اضافه به منوی اصلی" android:icon="@mipmap/addtomainmenu"
+    android:showAsAction="always|withText"
+        tools:ignore="AppCompatResource" />
+    <item android:id="@+id/ppeditmenu" android:title="اویرایش" android:icon="@mipmap/ic_edit"
+    android:showAsAction="always|withText"
+        tools:ignore="AppCompatResource" />
+    <item android:id="@+id/ppdelmenu" android:title="حذف" android:icon="@mipmap/ic_delete"
+        android:showAsAction="always|withText"
+        tools:ignore="AppCompatResource" />
+</menu>

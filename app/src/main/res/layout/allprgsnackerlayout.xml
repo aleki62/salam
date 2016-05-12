@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    >
+     <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="حذف"
+        android:id="@+id/btndelinall"
+         android:textColor="@android:color/holo_red_dark"
+         android:linksClickable="true"
+         android:layout_alignBottom="@+id/space"
+         android:layout_toLeftOf="@+id/space2"
+         android:background="@color/transparent"
+         android:layout_toStartOf="@+id/space2" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="اضافه به منوی اصلی"
+        android:id="@+id/btnaddmainmenu"
+        android:textColor="@android:color/holo_red_dark"
+        android:background="@color/transparent"
+
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:linksClickable="true"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ویرایش"
+        android:id="@+id/btneditinall"
+        android:linksClickable="true"
+        android:textColor="@android:color/holo_red_dark"
+        android:background="@color/transparent"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/space"
+        android:layout_toStartOf="@+id/space" />
+
+    <Space
+        android:layout_width="40px"
+        android:layout_height="20px"
+        android:id="@+id/space"
+        android:layout_alignBottom="@+id/btneditinall"
+        android:layout_toLeftOf="@+id/btnaddmainmenu"
+        android:layout_toStartOf="@+id/btnaddmainmenu" />
+
+    <Space
+        android:layout_width="40px"
+        android:layout_height="20px"
+        android:id="@+id/space2"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/btneditinall"
+        android:layout_toStartOf="@+id/btneditinall" />
+
+
+</RelativeLayout>

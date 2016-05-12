@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent" android:layout_width="fill_parent"
+    android:background="@drawable/rm_tv_black_bg_up" android:gravity="center_horizontal">
+
+
+    <LinearLayout android:layout_height="fill_parent" android:layout_width="fill_parent"
+        android:gravity="center_horizontal"
+        android:id="@+id/main_layout" android:orientation="vertical">
+
+
+    <RelativeLayout android:layout_height="wrap_content" android:layout_width="fill_parent"
+        android:gravity="center" android:layout_marginTop="15.0dip">
+
+    <Button android:layout_height="80.0dip" android:layout_width="80.0dip"
+        android:background="@drawable/btn_tv_power_black_inactive_selector"
+        android:id="@+id/btn_tv_power"
+        android:layout_centerInParent="true" android:tag="\ 0"/>
+
+    <Button android:background="@drawable/btn_tv_common_black_selector"
+        android:id="@+id/btn_switch" android:tag="\ 7" style="@style/btn_rm_tv_black_common_style"
+        android:layout_toLeftOf="@id/btn_tv_power" android:text="@string/rm_tv_switch" android:layout_marginRight="30.0dip"/>
+
+    <Button android:background="@drawable/btn_tv_common_black_selector"
+        android:id="@+id/btn_return" android:tag="\ 8"
+        style="@style/btn_rm_tv_black_common_style"
+        android:text="@string/rm_tv_back" android:layout_toRightOf="@id/btn_tv_power" android:layout_marginLeft="30.0dip"/>
+
+</RelativeLayout>
+
+
+    <RelativeLayout android:layout_height="150.0dip" android:layout_width="fill_parent" android:layout_marginTop="15.0dip">
+
+
+    <LinearLayout android:layout_height="fill_parent" android:layout_width="wrap_content" android:gravity="center"
+        android:id="@+id/ll_others" android:orientation="vertical" android:layout_centerHorizontal="true">
+
+    <Button android:layout_height="fill_parent" android:layout_width="fill_parent"
+        android:background="@drawable/btn_tv_mute_black_inactive_selector"
+        android:id="@+id/btn_mute" android:tag="\ 6" android:layout_weight="1.0"/>
+
+    <TextView android:layout_height="fill_parent" android:layout_width="fill_parent" android:layout_weight="1.3"/>
+
+    <Button android:layout_height="fill_parent" android:layout_width="fill_parent"
+        android:background="@drawable/btn_tv_9_black_selector"
+        android:id="@+id/btn_9" android:text="@string/rm_tv_9"
+        android:layout_weight="1.0" android:textColor="@color/rm_tv_black_textcolor_active" android:textSize="10.0sp"/>
+
+</LinearLayout>
+
+
+    <LinearLayout android:layout_height="150.0dip" android:layout_width="75.0dip"
+        android:background="@drawable/tv_black_volume_inactive" android:gravity="center"
+        android:id="@+id/ll_vol" android:orientation="vertical" android:layout_toLeftOf="@id/ll_others" android:layout_marginRight="15.0dip">
+
+    <Button android:layout_height="fill_parent" android:layout_width="fill_parent"
+        android:background="@android:color/transparent"
+        android:id="@+id/btn_vol_add" android:tag="\ 14" android:layout_weight="1.0"/>
+
+    <TextView android:layout_height="fill_parent" android:layout_width="fill_parent" android:gravity="center"
+        android:id="@+id/tv_tv_vol" android:text="@string/rm_tv_vol" android:layout_weight="1.5"
+        android:textColor="@color/rm_tv_black_textcolor_inactive" android:textSize="14.0sp"/>
+
+    <Button android:layout_height="fill_parent" android:layout_width="fill_parent"
+        android:background="@android:color/transparent" android:id="@+id/btn_vol_reduce" android:tag="\ 15" android:layout_weight="1.0"/>
+
+</LinearLayout>
+
+
+    <LinearLayout android:layout_height="150.0dip" android:layout_width="75.0dip"
+        android:background="@drawable/tv_black_channel_inactive" android:gravity="center"
+        android:id="@+id/ll_channel" android:orientation="vertical" android:layout_toRightOf="@id/ll_others" android:layout_marginLeft="15.0dip">
+
+    <Button android:layout_height="fill_parent" android:layout_width="fill_parent" android:background="@android:color/transparent"
+        android:id="@+id/btn_channel_add" android:tag="\ 16" android:layout_weight="1.0"/>
+
+    <TextView android:layout_height="fill_parent" android:layout_width="fill_parent" android:gravity="center"
+        android:id="@+id/tv_tv_channel" android:text="@string/rm_tv_channel" android:layout_weight="1.5"
+        android:textColor="@color/rm_tv_black_textcolor_inactive" android:textSize="14.0sp"/>
+
+    <Button android:layout_height="fill_parent" android:layout_width="fill_parent"
+        android:background="@android:color/transparent" android:id="@+id/btn_channel_reduce" android:tag="\ 17" android:layout_weight="1.0"/>
+
+</LinearLayout>
+
+</RelativeLayout>
+
+
+    <RelativeLayout android:layout_height="wrap_content" android:layout_width="fill_parent" android:gravity="center"
+        android:layout_marginTop="15.0dip">
+
+    <Button android:background="@drawable/btn_tv_common_black_selector"
+        android:id="@+id/btn_tv_menu" android:layout_centerInParent="true" android:tag="\ 19"
+        style="@style/btn_rm_tv_black_common_style" android:text="@string/rm_tv_menu"/>
+
+    <Button android:background="@drawable/btn_tv_common_black_selector"
+        android:id="@+id/btn_exit" android:tag="\ 18" style="@style/btn_rm_tv_black_common_style"
+        android:layout_toLeftOf="@id/btn_tv_menu" android:text="@string/rm_tv_exit" android:layout_marginRight="40.0dip"/>
+
+    <Button android:background="@drawable/btn_tv_common_black_selector"
+        android:id="@+id/btn_more" style="@style/btn_rm_tv_black_common_style"
+        android:text="@string/rm_tv_more" android:layout_toRightOf="@id/btn_tv_menu"
+        android:layout_marginLeft="40.0dip" android:textColor="@color/rm_tv_black_textcolor_active"/>
+
+</RelativeLayout>
+
+
+    <RelativeLayout android:layout_height="fill_parent" android:layout_width="fill_parent"
+        android:background="@drawable/rm_tv_black_bg_down" android:layout_marginTop="30.0dip">
+
+
+    <RelativeLayout android:layout_height="195.0dip" android:layout_width="195.0dip"
+        android:background="@drawable/tv_black_direction"
+        android:id="@+id/rl_rm_tv_direction" android:layout_centerInParent="true">
+
+    <Button android:background="@drawable/btn_tv_ok_black_selector"
+        android:id="@+id/btn_tv_ok" android:layout_centerInParent="true" android:tag="\ 13"
+        style="@style/btn_rm_tv_black_common_style" android:text="@string/rm_tv_ok"/>
+
+    <ImageView android:layout_height="40.0dip" android:layout_width="40.0dip" android:background="@android:color/transparent"
+        android:id="@+id/btn_tv_up" android:tag="\ 9" android:layout_centerHorizontal="true" android:layout_alignParentTop="true"
+        android:scaleType="center" android:src="@drawable/tv_black_inactive_up"/>
+
+    <ImageView android:layout_height="40.0dip" android:layout_width="40.0dip" android:background="@android:color/transparent"
+        android:id="@+id/btn_tv_down" android:tag="\ 11" android:layout_centerHorizontal="true" android:scaleType="center"
+        android:src="@drawable/tv_black_inactive_down" android:layout_alignParentBottom="true"/>
+
+    <ImageView android:layout_height="40.0dip" android:layout_width="40.0dip" android:background="@android:color/transparent"
+        android:id="@+id/btn_tv_left" android:tag="\ 10" android:layout_marginRight="-5.0dip" android:scaleType="center"
+        android:src="@drawable/tv_black_inactive_left" android:layout_centerVertical="true" android:layout_alignParentLeft="true"/>
+
+    <ImageView android:layout_height="40.0dip" android:layout_width="40.0dip" android:background="@android:color/transparent"
+        android:id="@+id/btn_tv_right" android:tag="\ 12" android:scaleType="center" android:src="@drawable/tv_black_inactive_right"
+        android:layout_centerVertical="true" android:layout_alignParentRight="true"/>
+
+</RelativeLayout>
+
+</RelativeLayout>
+
+</LinearLayout>
+
+    <include android:id="@+id/num_layout" layout="@layout/number_layout_black" android:visibility="gone"/>
+
+    <!--<include android:id="@+id/custom_more_layout" layout="@layout/custom_more_layout_black" android:visibility="gone"/>-->
+
+    <ProgressBar android:layout_height="wrap_content" android:layout_width="wrap_content"
+        android:id="@+id/progress_dialg" style="?android:attr/progressBarStyleSmall" android:visibility="gone" android:layout_gravity="center"/>
+
+</FrameLayout>
