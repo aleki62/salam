@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.database.Cursor;
@@ -32,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.parmissmarthome.parmis_smart_home.db.mainmenudb;
+import com.pushlink.android.PushLink;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -44,7 +46,7 @@ import java.util.Date;
 public class addaction extends AppCompatActivity {
 
     private static final int REQUEST_PICK_CODE = 1, REQUEST_CROP_ICON= 10;
-    public static final int actionLamp=0, actionCurtain=1, actionTV=2;
+    public static final int actionLamp=0, actionCurtain=1, actionTV=2, actionCoolergaz=3, actionLock=4, actionCinema=5, actionDimmer=6;
 
     private String selectedImagePath;
     private int RemoteCode;
@@ -64,7 +66,11 @@ public class addaction extends AppCompatActivity {
     Integer[] imageIDs = {
             R.drawable.lamp,
             R.drawable.curtian,
-            R.drawable.tv
+            R.drawable.tv,
+            R.drawable.coolergaz,
+            R.drawable.lock,
+            R.drawable.cinema,
+            R.drawable.dimmer
     };
     private int selaction;
 
@@ -72,6 +78,8 @@ public class addaction extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addaction);
+        if(!MainActivity.isClient)
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         db=new mainmenudb(this);
         img= (ImageView) findViewById(R.id.imgLamp);
@@ -120,8 +128,23 @@ public class addaction extends AppCompatActivity {
 //                Toast.makeText(getBaseContext(), "pic" + (position + 1) + " selected",
 //                        Toast.LENGTH_SHORT).show();
                 selaction = position;
-                if (selaction == actionTV)
-                    ifToggle = script.ScriptTv;
+                switch (selaction) {
+                    case actionTV:
+                        ifToggle = script.ScriptTv;
+                        break;
+                    case actionCoolergaz:
+                        ifToggle = script.ScriptCoolergaz;
+                        break;
+                    case actionLock:
+                        ifToggle = script.ScriptLock;
+                        break;
+                    case actionCinema:
+                        ifToggle = script.ScriptCinema;
+                        break;
+                    case actionDimmer:
+                        ifToggle = script.ScriptDimmer;
+                        break;
+                }
             }
 
             @Override
@@ -212,7 +235,7 @@ public class addaction extends AppCompatActivity {
         MainActivity.progressBar.setMax(100);
         MainActivity.progressBar.show();
         Log.d(MainActivity.Tag, "::دریافت کد از ریموت");
-        MainActivity.mTcpClient.sendMessage("*GETRF*" + (char) 0xc1);
+        MainActivity.sendtocenterrf("*GETRF*" + (char) 0xc1, view, Long.valueOf(-1), -1);
     }
     static final int REQUEST_IMAGE_CAPTURE = 3;
 

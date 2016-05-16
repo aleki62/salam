@@ -301,6 +301,8 @@ public class ListeningServices extends Service {
            return res;
 
 //        showNotification(data);
+        MainActivity.isAddClient= true;
+
         Context context= getApplicationContext();
         Intent intent= new Intent(context, mobilejoin.class);
         intent.putExtra("mac", data);

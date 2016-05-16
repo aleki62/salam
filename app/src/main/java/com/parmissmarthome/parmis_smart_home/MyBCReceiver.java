@@ -172,8 +172,6 @@ public class MyBCReceiver extends BroadcastReceiver {
                 MainActivity.wificonnect= info.isConnected();
 //                Log.e("alhabib", MainActivity.infoMe.CurrentSSID + " وصل شد");
 //
-//                salam khobi????
-                System.out.print("salam");
                 if (info != null && info.isConnected()) {
                     // Do your work.
                     // e.g. To ch eck the Network Name or other info:
@@ -181,7 +179,7 @@ public class MyBCReceiver extends BroadcastReceiver {
                     WifiInfo wifiInfo = wifiManager.getConnectionInfo();
                     MainActivity.infoMe.CurrentSSID = wifiInfo.getSSID().replaceAll("\"","");
                     Toast.makeText(mActivity, MainActivity.infoMe.CurrentSSID + " وصل شد", Toast.LENGTH_LONG).show();
-                    Log.d(MainActivity.Tag, "شبکه کاربر "+ MainActivity.infoMe.UserSSID);
+//                    Log.d(MainActivity.Tag, "شبکه کاربر "+ MainActivity.infoMe.UserSSID);
 
                     if (!MainActivity.infoMe.CurrentSSID.equals(MainActivity.ParmisSHRFSender)) {
                         int ipAddress = wifiInfo.getIpAddress();
@@ -191,7 +189,8 @@ public class MyBCReceiver extends BroadcastReceiver {
                                 (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
                         if (ss.indexOf("0.0")==-1) {
                             MainActivity.infoMe.IPme = ss;
-                            if(!MainActivity.isClient && ss.substring(ss.lastIndexOf('.'))!=".92"){
+//                            Log.e(MainActivity.Tag, "مرحله "+ MainActivity.RegCenterLevel+ " اتصال به شبکه کاربر");
+                            if(MainActivity.RegCenterLevel==3&& !MainActivity.isClient && ss.substring(ss.lastIndexOf('.'))!=".92"){
                                 ss= ss.substring(0, ss.lastIndexOf('.')) + ".92";
                                 MainActivity.infoMe.IPme =ss;
 //
@@ -209,6 +208,17 @@ public class MyBCReceiver extends BroadcastReceiver {
                                     setDNS(InetAddress.getByName("8.8.8.8"), wifiConf);
                                     wifiManager.updateNetwork(wifiConf); //apply the setting
                                     wifiManager.saveConfiguration(); //Save it
+                                    MainActivity.RegCenterLevel= 4;
+
+                                    wifiManager.setWifiEnabled(false);
+                                    try {
+                                        MainActivity.StartServices();
+//                                        context.stopService(new Intent(context, runScript.class));
+//                                        context.stopService(new Intent(context, ListeningServices.class));
+                                    }catch (Exception e){
+                                        Log.e(MainActivity.Tag, e.getMessage());
+                                    }
+
                                 }catch(Exception e){
                                     e.printStackTrace();
                                 }

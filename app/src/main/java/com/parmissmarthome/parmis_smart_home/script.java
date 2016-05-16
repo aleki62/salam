@@ -15,7 +15,11 @@ public class script {
             ScriptYes=4,
             ScriptCurtianToggle=5,
             ScriptCurtianAndroid=6,
-            ScriptTv=7;
+            ScriptTv=7,
+            ScriptCoolergaz=8,
+            ScriptLock= 9,
+            ScriptCinema=10,
+            ScriptDimmer=11;
     public String server;
 
     public script(long id, long actionid, String name, int state, int saveme, String server){

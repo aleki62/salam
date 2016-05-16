@@ -17,6 +17,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.drawable.ColorDrawable;
 import android.net.nsd.NsdManager;
 import android.net.nsd.NsdServiceInfo;
 import android.net.wifi.WifiConfiguration;
@@ -37,6 +38,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.telephony.SmsManager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -81,6 +83,7 @@ public class MainActivity extends AppCompatActivity
     static ConfigClient configClient;
     public static boolean isRunApp=false;
     public static boolean isLockScreen=false;
+    public static boolean isAddClient=false;
 
     public static final String cmdGiveMeSQL= "GiveMeSQL";
     public static final String cmdSendDBComplete= "SendDBComplete";
@@ -217,6 +220,8 @@ public class MainActivity extends AppCompatActivity
 //                SendInternet("*SNDRF*12345678*0#");
             }
         });
+        fab.setVisibility(View.INVISIBLE);
+
         context= this;
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -275,10 +280,6 @@ public class MainActivity extends AppCompatActivity
 //        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_CONNECTION_CHANGED_ACTION);
 //        mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION);
         mIntentFilter.addAction(WifiManager.NETWORK_STATE_CHANGED_ACTION);
-        if (!isClient) {
-            mIntentFilter.addAction(Intent.ACTION_SCREEN_ON);
-            mIntentFilter.addAction(Intent.ACTION_SCREEN_OFF);
-        }
         mIntentFilter.addAction("com.poujman.ReceiveParmisSmartHome");//getString(R.string.brdReceiverParmisSmartHome));
         mIntentFilter.addAction(Intent.ACTION_BOOT_COMPLETED);
         mIntentFilter.addCategory(Intent.CATEGORY_HOME);
@@ -290,13 +291,14 @@ public class MainActivity extends AppCompatActivity
 
         if (!isClient) {
             startService(new Intent(getBaseContext(), ListeningServices.class));
+                startService(new Intent(getBaseContext(), runScript.class));
 //            startService(new Intent(getBaseContext(), runScript.class));
+            registerReceiver(mReceiver, mIntentFilter);
         }
         else {
             mNsdManager = (NsdManager) getSystemService(Context.NSD_SERVICE);
         }
-        registerReceiver(mReceiver, mIntentFilter);
-        mContentView = findViewById(R.id.mainback);
+        mContentView = findViewById(R.id.app_bar_main1);
 //        mControlsView = findViewById(R.id.fullscreen_content_controls);
     }
 
@@ -313,15 +315,13 @@ public class MainActivity extends AppCompatActivity
         Log.d(Tag, "Resume ...");
         isRunApp=true;
         isLockScreen= false;
+        isAddClient= false;
 
         if (isClient && mNsdManager != null) {
             mNsdManager.discoverServices(
                     SERVICE_TYPE, NsdManager.PROTOCOL_DNS_SD, mDiscoveryListener);
         }
         if (closeconnection==0) {
-            if (!isClient) {
-                startService(new Intent(getBaseContext(), runScript.class));
-            }
             closeconnection = -1;
             timer = new Timer();
             timer.scheduleAtFixedRate(new TimerTask() {
@@ -352,7 +352,8 @@ public class MainActivity extends AppCompatActivity
     protected void onPause() {
 //        unregisterReceiver(mReceiver);
         Log.d(Tag, "Pause ...");
-        isRunApp= false;
+        if(!isAddClient)
+            isRunApp= false;
         PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
         isLockScreen = !powerManager.isScreenOn();
 
@@ -407,10 +408,10 @@ public class MainActivity extends AppCompatActivity
                     sms,
                     null,
                     null);
-            Toast.makeText(context, "Your sms has successfully sent!",
+            Toast.makeText(context, "دستور شما با موفقعیت ارسال شد",
                     Toast.LENGTH_LONG).show();
         } catch (Exception ex) {
-            Toast.makeText(context,"Your sms has failed...",
+            Toast.makeText(context,"دستور ارسال نشد!!!!!",
                     Toast.LENGTH_LONG).show();
             ex.printStackTrace();
         }
@@ -420,21 +421,24 @@ public class MainActivity extends AppCompatActivity
             if (listClientDevices.size() > 0)
                 if (listClientDevices.get(0).DeviceType == "RF") {
                     listClientDevices.get(0).sendmessage(cmd);
+                    launchRingDialog(view);
                     return true;
                 }
             Log.e(Tag, "اتصال به مبدل برقرار نیست!!!!!!!!!!");
             if (view != null)
                 Snackbar.make(view, "اتصال به مبدل برقرار نیست!!!!!!!!!!", Snackbar.LENGTH_LONG).show();
         }else{
-            if (sTcpClient!=null)
+            if (sTcpClient!=null) {
                 sTcpClient.sendMessage(cmd);
+                launchRingDialog(view);
+            }
             else
                 Snackbar.make(view, "اتصال به سرور برقرار نیست!!!!!!!!", Snackbar.LENGTH_LONG)
                         .setAction("پیامک", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 if(id!=-1)
-                                    sendSmsByManager("09355669277", infoMe.macme+","+ id+ ","+ state+",");
+                                    sendSmsByManager("09012308300", infoMe.macme+","+ id+ ","+ state+",");
                             }
                         })
                         .show();
@@ -442,6 +446,7 @@ public class MainActivity extends AppCompatActivity
 
         return false;
     }
+
     NsdManager.DiscoveryListener mDiscoveryListener = new NsdManager.DiscoveryListener() {
 
         // Called as soon as service discovery begins.
@@ -523,7 +528,12 @@ public class MainActivity extends AppCompatActivity
             infoMe.PORTCenter = serviceInfo.getPort();
             infoMe.IPCenter = serviceInfo.getHost();
 
-            new ConnectToServer().execute("");
+            try {
+
+                new ConnectToServer().execute("");
+            }catch (Exception e){
+                Log.d(Tag, e.getMessage());
+            }
         }
     };
     /*************************************************************************************************************/
@@ -584,15 +594,19 @@ public class MainActivity extends AppCompatActivity
         protected TCPClient doInBackground(String... message) {
             Log.d(Tag, "اتصال به تبلت");
             //we create a TCPClient object and
-            sTcpClient = new TCPClient(infoMe.IPCenter, infoMe.PORTCenter, new TCPClient.OnMessageReceived() {
-                @Override
-                //here the messageReceived method is implemented
-                public void messageReceived(String message) {
-                    //this method calls the onProgressUpdate
-                    publishProgress(message);
-                }
-            });
-            sTcpClient.run();
+            try {
+                sTcpClient = new TCPClient(infoMe.IPCenter, infoMe.PORTCenter, new TCPClient.OnMessageReceived() {
+                    @Override
+                    //here the messageReceived method is implemented
+                    public void messageReceived(String message) {
+                        //this method calls the onProgressUpdate
+                        publishProgress(message);
+                    }
+                });
+                sTcpClient.run();
+            }catch (Exception e){
+                Log.e(Tag, e.getMessage());
+            }
 
             return null;
         }
@@ -1013,15 +1027,19 @@ public class MainActivity extends AppCompatActivity
         protected TCPClient doInBackground(String... message) {
 
             //we create a TCPClient object and
-            mTcpClient = new TCPClient(infoMe.IPCenter, infoMe.PORTCenter, new TCPClient.OnMessageReceived() {
-                @Override
-                //here the messageReceived method is implemented
-                public void messageReceived(String message) {
-                    //this method calls the onProgressUpdate
-                    publishProgress(message);
-                }
-            });
-            mTcpClient.run();
+            try {
+                mTcpClient = new TCPClient(infoMe.IPCenter, infoMe.PORTCenter, new TCPClient.OnMessageReceived() {
+                    @Override
+                    //here the messageReceived method is implemented
+                    public void messageReceived(String message) {
+                        //this method calls the onProgressUpdate
+                        publishProgress(message);
+                    }
+                });
+                mTcpClient.run();
+            }catch (Exception e){
+                Log.e(Tag, e.getMessage());
+            }
 
             return null;
         }
@@ -1086,9 +1104,10 @@ public class MainActivity extends AppCompatActivity
     /*************************************************************************************************************/
     private void addcenterrf(){
         final Dialog dialog=new Dialog(this, R.style.DialogSlideAnim);
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
 //        Log.e(MainActivity.Tag, "ساخت دیاالگ");
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-//                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+//        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
         dialog.setContentView(R.layout.activity_add_middle);
 //                dialog.setTitle(null);
 /*
@@ -1111,7 +1130,7 @@ public class MainActivity extends AppCompatActivity
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (MainActivity.wificonnect) {
+//                if (MainActivity.wificonnect) {
 //                if (MainActivity.mTcpClient != null) {
 //                    MainActivity.mTcpClient.stopClient();
 //                    Log.d(MainActivity.Tag, "توقف سرویس قدیمی");
@@ -1155,8 +1174,8 @@ public class MainActivity extends AppCompatActivity
                     } else
                         Log.d(MainActivity.Tag, "نمی توان وصل شد");
 */
-                } else
-                    Toast.makeText(v.getContext(), "!!!اتصال اولیه برفرار نیست", Toast.LENGTH_SHORT).show();
+//                } else
+//                    Toast.makeText(v.getContext(), "!!!اتصال اولیه برفرار نیست", Toast.LENGTH_SHORT).show();
             }
         });
         dialog.show();
@@ -1225,4 +1244,45 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    public static void StartServices(){
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (!isClient && MainActivity.RegCenterLevel>=4){
+                    if (MainActivity.RegCenterLevel++==10) {
+                        MainActivity.wifiManager.setWifiEnabled(true);
+                        MainActivity.RegCenterLevel = -1;
+                        cancel();
+
+                    }else
+                        if (RegCenterLevel==15){
+                            if (!isClient) {
+                                context.startService(new Intent(context, ListeningServices.class));
+                                context.startService(new Intent(context, runScript.class));
+                            }
+                        }
+                }
+
+            }
+
+        }, 0, 1000);
+    }
+
+    public static void launchRingDialog(View view) {
+        if (view==null) return;
+        final ProgressDialog ringProgressDialog = ProgressDialog.show(context, "لطفا کمی صبر کنید", "ارسال کد...", true);
+        ringProgressDialog.setCancelable(true);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // Here you should write your time consuming task...
+                    // Let the progress ring for 10 seconds...
+                    Thread.sleep(2000);
+                } catch (Exception e) {
+                }
+                ringProgressDialog.dismiss();
+            }
+        }).start();
+    }
 }

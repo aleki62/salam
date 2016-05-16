@@ -84,7 +84,7 @@ public class runScript extends Service {
                     }*/
                 }
                 if(!MainActivity.isRunApp&&!MainActivity.isLockScreen){
-                    Log.d(MainActivity.Tag, "برنامه اجرا نیس");
+//                    Log.d(MainActivity.Tag, "برنامه اجرا نیس");
                     Intent intent = new Intent();
                     intent.setAction(Intent.ACTION_MAIN);
                     intent.addCategory(Intent.CATEGORY_LAUNCHER);
